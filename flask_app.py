@@ -3,23 +3,26 @@ import io
 import os
 from PIL import Image
 import torch
-from flask import Flask, render_template, request, jsonify, send_file
+from flask import Flask, render_template, request, redirect, jsonify, send_file
 from keras.preprocessing import image
 from keras.applications.imagenet_utils import preprocess_input
 import numpy as np
 from tensorflow.keras.models import load_model
+from flask import Flask, render_template, request, redirect, flash, url_for
+import urllib.request
+from werkzeug.utils import secure_filename
 from flask_cors import CORS
 import base64
 
 app = Flask(__name__)
 CORS(app)
 
-# Define the model outside of __name__ == "__main__" block
-model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
-model.eval()
+# Define model as a global variable
+model = None
 
 @app.route("/", methods=["GET", "POST"])
 def predict():
+    global model  # Access the global variable
     if request.method == "POST":
         try:
             if "file" not in request.files:
@@ -35,8 +38,8 @@ def predict():
             results.render()  # updates results.ims with boxes and labels
             
             # Save the image with detection labels
-            labeled_image = Image.fromarray(results.ims[0])  # Convert NumPy array to Image object
-            labeled_image.save("static/images/screenshot.jpg", "JPEG")
+            labeled_image = results.ims[0]  # Get the first image with labels
+            Image.fromarray(labeled_image).save("static/images/screenshot.jpg", "JPEG")
             
             filename = "static/images/screenshot.jpg"
 
@@ -65,7 +68,6 @@ def predict():
         except Exception as e:
             return jsonify({"error": str(e)}), 500
 
-
 @app.route('/bookappt')
 def bookappt():
     return render_template('bookappt.html')
@@ -79,4 +81,7 @@ if __name__ == "__main__":
     parser.add_argument("--port", default=5000, type=int, help="port number")
     args = parser.parse_args()
 
-    app.run(host="0.0.0.0", port=args.port)
+    model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)  # force_reload = recache latest code
+    model.eval()
+
+    app.run(host="0.0.0.0", port=args.port)  # debug=True causes Restarting with stat
