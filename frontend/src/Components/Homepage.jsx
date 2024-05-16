@@ -6,7 +6,6 @@ import FileUploader from './FileUploader'
 export const Homepage = () => {
     return (
         <div>
-            {/* <Navbar /> */}
             <HeadSection />
             <AISection />
             <FileUploader />
