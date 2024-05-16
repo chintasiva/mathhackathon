@@ -19,3 +19,9 @@ Welcome to the Car Damage Detection and Analysis project! This application allow
 2. *Processing*: The image is processed using advanced image recognition algorithms to detect and highlight the damaged areas.
 3. *Analysis*: The system calculates the damage percentage based on the identified damaged regions.
 4. *Results*: The highlighted image, damage percentage, and a pie chart visualization are presented to the user.
+
+## The Portal looks like this :
+
+
+https://github.com/chintasiva/mathhackathon/assets/112633527/7d98c113-901f-44c0-88f5-a637b5ca7238
+
