@@ -376,17 +376,57 @@ const FileUploader = () => {
     setSelectedFile(event.dataTransfer.files[0]);
   };
 
+  // const handleUpload = async (e) => {
+  //   e.preventDefault();
+  //   setIsLoading(true)
+  //   if (selectedFile) {
+  //     const formData = new FormData();
+  //     formData.append('file', selectedFile);
+
+  //     try {
+  //       const res = await axios.post('https://mathhackathon.onrender.com/', formData, {
+  //         headers: {
+  //           'Content-Type': 'application/json'
+  //         }
+  //       });
+  //       console.log(res)
+  //       setResponse(res.data);
+  //       setImageData(res.data.image);
+  //       toast({
+  //         title: "Successfully got the response",
+  //         description: "Your message has been sent successfully!",
+  //         status: "success",
+  //         duration: 3000,
+  //         isClosable: true,
+  //       });
+  //       setIsLoading(false)
+  //     } catch (error) {
+  //       console.error('Error uploading file:', error);
+  //       toast({
+  //         title: "Error",
+  //         description: error.response.data,
+  //         status: "error",
+  //         duration: 3000,
+  //         isClosable: true,
+  //       });
+  //       setIsLoading(false)
+
+  //     }
+  //   }
+  // };
+
+
   const handleUpload = async (e) => {
     e.preventDefault();
-    setIsLoading(true)
+    setIsLoading(true);
     if (selectedFile) {
       const formData = new FormData();
-      formData.append('file', selectedFile);
-
+      formData.append('file', selectedFile); // Ensure 'file' matches the backend key
+  
       try {
         const res = await axios.post('http://localhost:5000/', formData, {
           headers: {
-            'Content-Type': 'multipart/form-data'
+            'Content-Type': 'multipart/form-data' // Use multipart/form-data for file upload
           }
         });
         console.log(res)
@@ -399,21 +439,31 @@ const FileUploader = () => {
           duration: 3000,
           isClosable: true,
         });
-        setIsLoading(false)
+        setIsLoading(false);
       } catch (error) {
         console.error('Error uploading file:', error);
         toast({
           title: "Error",
-          description: error.response.data,
+          description: error.response.data.error, // Access error message properly
           status: "error",
           duration: 3000,
           isClosable: true,
         });
-        setIsLoading(false)
-
+        setIsLoading(false);
       }
+    } else {
+      // Handle case when no file is selected
+      setIsLoading(false);
+      toast({
+        title: "Error",
+        description: "Please select a file.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
     }
   };
+  
 
   return (
     <Stack bg="gray.900" id='check-damage-section'>

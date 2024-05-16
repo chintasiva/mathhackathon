@@ -10,6 +10,7 @@ import numpy as np
 from tensorflow.keras.models import load_model
 from flask_cors import CORS
 import base64
+import traceback
 
 app = Flask(__name__)
 CORS(app)
@@ -65,6 +66,7 @@ def predict():
         return jsonify(response), 200
         
     except Exception as e:
+        traceback.print_exc()  # Print detailed error traceback
         return jsonify({"error": str(e)}), 500
 
 @app.route('/bookappt')
