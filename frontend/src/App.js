@@ -15,9 +15,9 @@ function App() {
   const [data, setData] = useState({})
 
 
-  useEffect(() => {
-    fetchData()
-  }, [])
+  // useEffect(() => {
+  //   fetchData()
+  // }, [])
 
   const fetchData = async () => {
     await axios.get("http://localhost:5000/app/data")
