@@ -15,44 +15,6 @@ from flask_cors import CORS
 import base64
 app = Flask(__name__)
 CORS(app)
-# @app.route("/", methods=["GET", "POST"])
-# def predict():
-#     if request.method == "POST":
-#         if "file" not in request.files:
-#             return redirect(request.url)
-#         file = request.files["file"]
-#         if not file:
-#             return
-#         img_bytes = file.read()
-#         img = Image.open(io.BytesIO(img_bytes))
-#         results = model(img)  # inference
-#         results.render()  # updates results.ims with boxes and labels
-#         Image.fromarray(results.ims[0]).save("static/images/image0.jpg")
-#         filename=file.filename
-#         img2 = image.load_img(filename, target_size=(224, 224))
-#         x = image.img_to_array(img2)
-#         x = np.expand_dims(x, axis=0)
-#         x = preprocess_input(x)
-#         model2 = load_model('vgg_model.h5')
-#         preds = model2.predict(x)
-#         result = preds[0][0]
-#         image1 = Image.open('static/images/image0.jpg')
-#         image2 = Image.open('static/images/screenshot.jpg')
-#         image1_size = image1.size
-#         image2_size = image2.size
-#         new_image = Image.new('RGB',(3*image2_size[0],image2_size[1]), (250,250,250))
-#         new_image.paste(image1,(0,0))
-#         new_image.paste(image2,(image1_size[0],0))
-#         new_image.save("static/images/merged_image.jpg","JPEG")
-#         if result < preds[0][1]:
-#             print("messy")
-#         else:
-#             print("clean")
-        
-#         return redirect("static/images/merged_image.jpg")
-
-#     return render_template("index.html")
-
 
 @app.route("/", methods=["GET", "POST"])
 def predict():
@@ -80,7 +42,7 @@ def predict():
             x = image.img_to_array(img2)
             x = np.expand_dims(x, axis=0)
             x = preprocess_input(x)
-            model2 = load_model('vgg_model.h5')
+            model2 = load_model('model.h1')
             preds = model2.predict(x)
             result = preds[0][0]
             
