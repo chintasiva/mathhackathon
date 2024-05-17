@@ -1,5 +1,5 @@
-flask
-waitress
+Flask
+Gunicorn
 keras
 tensorflow
 flask_cors
